@@ -22,16 +22,21 @@ class Note extends Component {
         })
     }
     remove() {
+        this.props.onRemove(this.props.index);
     }
-    save() {
-        alert(this._newTest.value);
+    save(e) {
+        e.preventDefault();
+        this.props.onChange(this._newText.value, this.props.index);
+        this.setState({
+            editing : false
+        })
     }
     renderForm() {
         return (
             <div className="note">
-                <form>
-                    <textarea ref={input => (this._newTest = input)}/>
-                    <button onClick={this.save}><FaFloppyO/></button>
+                <form onSubmit={this.save}>
+                    <textarea ref={input => (this._newText = input)}/>
+                    <button id="save" onClick={this.save}><FaFloppyO/></button>
                 </form>
             </div>
         )
@@ -41,8 +46,8 @@ class Note extends Component {
             <div className="note">
                 <p>{this.props.children}</p>
                 <span>
-                    <button onClick={this.edit}><FaPencil/></button>
-                    <button onClick={this.remove}><FaTrash/></button>
+                    <button id="edit" onClick={this.edit}><FaPencil/></button>
+                    <button id="remove" onClick={this.remove}><FaTrash/></button>
                 </span>
             </div>
         );
